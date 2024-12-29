@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Commission Calculator</title>
+  <style>
+    /* Basic styling for tabs */
+    .tabs {
+      display: flex;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+    .tab {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      margin-right: 5px;
+    }
+    .tab.active {
+      background-color: #fff;
+      border-bottom: none;
+      font-weight: bold;
+    }
+    /* Content for each tab */
+    .tab-content {
+      display: none;
+      padding: 1rem;
+      border: 1px solid #ccc;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Layout for the form */
+    .container {
+      width: 800px;
+      margin: 0 auto;
+    }
+    .row {
+      margin: 0.5rem 0;
+    }
+    .row label {
+      display: inline-block;
+      width: 150px;
+      font-weight: bold;
+    }
+    .row input[type="number"] {
+      width: 150px;
+      padding: 5px;
+    }
+    .row select {
+      width: 160px;
+      padding: 5px;
+    }
+
+    /* Multiple select or checkboxes, etc. */
+    .adders-list label {
+      display: block;
+      margin-bottom: 0.3rem;
+      cursor: pointer;
+    }
+
+    /* Summaries or result fields */
+    .result-field {
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+
+    /* Just to make it easier to see each item */
+    .adders-list {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Commission Calculator</h1>
+
+    <!-- 1) Tabs to select: SMP, EmPower, Trust, Freedom Forever -->
+    <div class="tabs">
+      <div class="tab active" data-target="tab-smp">SMP</div>
+      <div class="tab" data-target="tab-empower">EmPower</div>
+      <div class="tab" data-target="tab-trust">Trust</div>
+      <div class="tab" data-target="tab-freedom">Freedom Forever</div>
+    </div>
+
+    <!-- SMP TAB CONTENT -->
+    <div id="tab-smp" class="tab-content active">
+      <h3>SMP Adders</h3>
+      <div class="adders-list">
+        <label>
+          <input type="checkbox" value="2500" class="adder-checkbox" />
+          MPU - $2500
+        </label>
+        <label>
+          <input type="checkbox" value="5000" class="adder-checkbox" />
+          Span MPU - $5000
+        </label>
+        <label>
+          <input type="checkbox" value="750" class="adder-checkbox" />
+          D-rate - $750
+        </label>
+        <label>
+          <input type="checkbox" value="500" class="adder-checkbox" />
+          Sub panel - basic - $500
+        </label>
+        <label>
+          <input type="checkbox" value="1500" class="adder-checkbox" />
+          Sub panel - complex - $1500
+        </label>
+        <label>
+          <input type="checkbox" value="1500" class="adder-checkbox" />
+          EV charger - $1500
+        </label>
+        <label>
+          <input type="checkbox" value="500" class="adder-checkbox" />
+          EV outlet - $500
+        </label>
+        <label>
+          <input type="checkbox" value="1082.4" class="adder-checkbox" />
+          IQ 8 upgrade - $1082.4
+        </label>
+        <label>
+          <input type="checkbox" value="9300" class="adder-checkbox" />
+          10p - no back up - $9300
+        </label>
+        <label>
+          <input type="checkbox" value="12450" class="adder-checkbox" />
+          15p - no back up - $12450
+        </label>
+        <label>
+          <input type="checkbox" value="16600" class="adder-checkbox" />
+          20p - no back up - $16600
+        </label>
+        <label>
+          <input type="checkbox" value="20750" class="adder-checkbox" />
+          25p - no back up - $20750
+        </label>
+        <label>
+          <input type="checkbox" value="24900" class="adder-checkbox" />
+          30p - no back up - $24900
+        </label>
+        <label>
+          <input type="checkbox" value="12800" class="adder-checkbox" />
+          10p - back up - $12800
+        </label>
+        <label>
+          <input type="checkbox" value="16950" class="adder-checkbox" />
+          15p - back up - $16950
+        </label>
+        <label>
+          <input type="checkbox" value="21100" class="adder-checkbox" />
+          20p - back up - $21100
+        </label>
+        <label>
+          <input type="checkbox" value="25250" class="adder-checkbox" />
+          25p - back up - $25250
+        </label>
+        <label>
+          <input type="checkbox" value="29400" class="adder-checkbox" />
+          30p - back up - $29400
+        </label>
+        <label>
+          <input type="checkbox" value="11500" class="adder-checkbox" />
+          1 - Powerwall 3 - $11500
+        </label>
+        <label>
+          <input type="checkbox" value="23000" class="adder-checkbox" />
+          2 - Powerwall 3 - $23000
+        </label>
+        <label>
+          <input type="checkbox" value="34500" class="adder-checkbox" />
+          3 - Powerwall 3 - $34500
+        </label>
+        <label>
+          <input type="checkbox" value="46000" class="adder-checkbox" />
+          4 - Powerwall 3 - $46000
+        </label>
+        <label>
+          <input type="checkbox" value="500" class="adder-checkbox" />
+          5-year panel cleaning (PPA) - $500
+        </label>
+        <label>
+          <input type="checkbox" value="4500" class="adder-checkbox" />
+          Non-export add-on system - $4500
+        </label>
+        <label>
+          <input type="checkbox" value="0" class="adder-checkbox" />
+          Roof quote (no price listed)
+        </label>
+        <label>
+          <input type="checkbox" value="350" class="adder-checkbox" />
+          Attic run - $350
+        </label>
+        <label>
+          <input type="checkbox" value="375" class="adder-checkbox" />
+          Engineering stamp - $375
+        </label>
+        <label>
+          <input type="checkbox" value="800" class="adder-checkbox" />
+          Approximate permit cost - $800
+        </label>
+        <label>
+          <input type="checkbox" value="1230" class="adder-checkbox" />
+          Inflation - $1230
+        </label>
+        <label>
+          <input type="checkbox" value="13000" class="adder-checkbox" />
+          Franklin 13.6kw - $13000
+        </label>
+        <label>
+          <input type="checkbox" value="11500" class="adder-checkbox" />
+          Additional Franklin - $11500
+        </label>
+        <label>
+          <input type="checkbox" value="2500" class="adder-checkbox" />
+          Franklin backup - $2500
+        </label>
+        <label>
+          <input type="checkbox" value="3500" class="adder-checkbox" />
+          Battery only - $3500
+        </label>
+        <label>
+          <input type="checkbox" value="2706" class="adder-checkbox" />
+          Q tron 425 panel - $2706
+        </label>
+        <label>
+          <input type="checkbox" value="21648" class="adder-checkbox" />
+          Ground mount < 4kw - $21648
+        </label>
+        <label>
+          <input type="checkbox" value="17138" class="adder-checkbox" />
+          Ground mount 4-6kw - $17138
+        </label>
+        <label>
+          <input type="checkbox" value="13530" class="adder-checkbox" />
+          Ground mount 6.1kw+ - $13530
+        </label>
+        <label>
+          <input type="checkbox" value="27060" class="adder-checkbox" />
+          Raised ground mount < 4kw - $27060
+        </label>
+        <label>
+          <input type="checkbox" value="22550" class="adder-checkbox" />
+          Raised ground mount 4-6kw - $22550
+        </label>
+        <label>
+          <input type="checkbox" value="18942" class="adder-checkbox" />
+          Raised ground mount 6.1kw+ - $18942
+        </label>
+        <label>
+          <input type="checkbox" value="800" class="adder-checkbox" />
+          Small system 3-3.99kw - $800
+        </label>
+        <label>
+          <input type="checkbox" value="1200" class="adder-checkbox" />
+          Small system < 3kw - $1200
+        </label>
+        <label>
+          <input type="checkbox" value="750" class="adder-checkbox" />
+          Travel adder over 75-125 mi. from base - $750
+        </label>
+        <label>
+          <input type="checkbox" value="1200" class="adder-checkbox" />
+          Travel adder over 75-125 mi. w/ hotel - $1200
+        </label>
+        <label>
+          <input type="checkbox" value="2500" class="adder-checkbox" />
+          Travel adder 125-200 mi. - $2500
+        </label>
+        <label>
+          <input type="checkbox" value="3500" class="adder-checkbox" />
+          Travel adder 125-200 mi. w/ ground mount - $3500
+        </label>
+        <label>
+          <input type="checkbox" value="750" class="adder-checkbox" />
+          San Diego travel adder 75-100 mi. - $750
+        </label>
+        <label>
+          <input type="checkbox" value="1000" class="adder-checkbox" />
+          Battery inside garage - $1000
+        </label>
+        <label>
+          <input type="checkbox" value="1000" class="adder-checkbox" />
+          Lifetime panel cleaning (ownership only) - $1000
+        </label>
+      </div>
+    </div>
+
+    <!-- EmPower TAB CONTENT -->
+    <div id="tab-empower" class="tab-content">
+      <h3>EmPower Adders</h3>
+      <div class="adders-list">
+        <label>
+          <input type="checkbox" value="5000" class="adder-checkbox" />
+          5p - $5000
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          10p - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="13000" class="adder-checkbox" />
+          15p - $13000
+        </label>
+        <label>
+          <input type="checkbox" value="17000" class="adder-checkbox" />
+          20p - $17000
+        </label>
+        <label>
+          <input type="checkbox" value="21000" class="adder-checkbox" />
+          25p - $21000
+        </label>
+        <label>
+          <input type="checkbox" value="25000" class="adder-checkbox" />
+          30p - $25000
+        </label>
+        <label>
+          <input type="checkbox" value="29000" class="adder-checkbox" />
+          35p - $29000
+        </label>
+        <label>
+          <input type="checkbox" value="3000" class="adder-checkbox" />
+          MPU - $3000
+        </label>
+        <label>
+          <input type="checkbox" value="750" class="adder-checkbox" />
+          Sub-panel - $750
+        </label>
+        <label>
+          <input type="checkbox" value="750" class="adder-checkbox" />
+          Derate - $750
+        </label>
+        <label>
+          <input type="checkbox" value="3000" class="adder-checkbox" />
+          MPI/Hi-Tie - $3000
+        </label>
+        <label>
+          <input type="checkbox" value="5000" class="adder-checkbox" />
+          Back up - $5000
+        </label>
+        <label>
+          <input type="checkbox" value="8000" class="adder-checkbox" />
+          Ground mount - $8000
+        </label>
+        <label>
+          <input type="checkbox" value="15500" class="adder-checkbox" />
+          Generac 22kW - $15500
+        </label>
+        <label>
+          <input type="checkbox" value="675" class="adder-checkbox" />
+          Non-export add-on - $675
+        </label>
+      </div>
+    </div>
+
+    <!-- Trust TAB CONTENT -->
+    <div id="tab-trust" class="tab-content">
+      <h3>Trust Adders</h3>
+      <div class="adders-list">
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          Tesla Power Wall 3 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="8500" class="adder-checkbox" />
+          Additional Power Wall 3 - $8500
+        </label>
+        <label>
+          <input type="checkbox" value="8500" class="adder-checkbox" />
+          Additional Power Wall 3 - $8500
+        </label>
+        <label>
+          <input type="checkbox" value="8500" class="adder-checkbox" />
+          Additional Power Wall 3 - $8500
+        </label>
+        <label>
+          <input type="checkbox" value="8500" class="adder-checkbox" />
+          Additional Power Wall 3 - $8500
+        </label>
+        <label>
+          <input type="checkbox" value="8500" class="adder-checkbox" />
+          Additional Power Wall 3 - $8500
+        </label>
+        <label>
+          <input type="checkbox" value="4500" class="adder-checkbox" />
+          Enphase 5P - $4500
+        </label>
+        <label>
+          <input type="checkbox" value="4500" class="adder-checkbox" />
+          Enphase 5P - $4500
+        </label>
+        <label>
+          <input type="checkbox" value="4500" class="adder-checkbox" />
+          Enphase 5P - $4500
+        </label>
+        <label>
+          <input type="checkbox" value="4500" class="adder-checkbox" />
+          Enphase 5P - $4500
+        </label>
+        <label>
+          <input type="checkbox" value="4500" class="adder-checkbox" />
+          Enphase 5P - $4500
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          EG4 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          EG4 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          EG4 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          EG4 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          EG4 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="2800" class="adder-checkbox" />
+          MPU - $2800
+        </label>
+        <label>
+          <input type="checkbox" value="2500" class="adder-checkbox" />
+          EG4 BU - $2500
+        </label>
+      </div>
+    </div>
+
+    <!-- Freedom Forever TAB CONTENT -->
+    <div id="tab-freedom" class="tab-content">
+      <h3>Freedom Forever Adders</h3>
+      <div class="adders-list">
+        <label>
+          <input type="checkbox" value="5000" class="adder-checkbox" />
+          5P &lt;= 4kw no backup - $5000
+        </label>
+        <label>
+          <input type="checkbox" value="9750" class="adder-checkbox" />
+          10P &lt;= 4kw no backup - $9750
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          5P &gt; 4kw no backup - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="13750" class="adder-checkbox" />
+          10P &gt; 4kw no backup - $13750
+        </label>
+        <label>
+          <input type="checkbox" value="18500" class="adder-checkbox" />
+          15P &gt; 4kw no backup - $18500
+        </label>
+        <label>
+          <input type="checkbox" value="23250" class="adder-checkbox" />
+          20P &gt; 4kw no backup - $23250
+        </label>
+        <label>
+          <input type="checkbox" value="28000" class="adder-checkbox" />
+          25P &gt; 4kw no backup - $28000
+        </label>
+        <label>
+          <input type="checkbox" value="32750" class="adder-checkbox" />
+          30P &gt; 4kw no backup - $32750
+        </label>
+        <label>
+          <input type="checkbox" value="37500" class="adder-checkbox" />
+          35P &gt; 4kw no backup - $37500
+        </label>
+        <label>
+          <input type="checkbox" value="42250" class="adder-checkbox" />
+          40P &gt; 4kw no backup - $42250
+        </label>
+        <label>
+          <input type="checkbox" value="10500" class="adder-checkbox" />
+          5p - back up - $10500
+        </label>
+        <label>
+          <input type="checkbox" value="16250" class="adder-checkbox" />
+          10p - back up - $16250
+        </label>
+        <label>
+          <input type="checkbox" value="22000" class="adder-checkbox" />
+          15p - back up - $22000
+        </label>
+        <label>
+          <input type="checkbox" value="27750" class="adder-checkbox" />
+          20p - back up - $27750
+        </label>
+        <label>
+          <input type="checkbox" value="33500" class="adder-checkbox" />
+          25p - back up - $33500
+        </label>
+        <label>
+          <input type="checkbox" value="39250" class="adder-checkbox" />
+          30p - back up - $39250
+        </label>
+        <label>
+          <input type="checkbox" value="45000" class="adder-checkbox" />
+          35p - back up - $45000
+        </label>
+        <label>
+          <input type="checkbox" value="9000" class="adder-checkbox" />
+          1 - Powerwall 3 - $9000
+        </label>
+        <label>
+          <input type="checkbox" value="17500" class="adder-checkbox" />
+          2 - Powerwall 3 - $17500
+        </label>
+        <label>
+          <input type="checkbox" value="26000" class="adder-checkbox" />
+          3 - Powerwall 3 - $26000
+        </label>
+        <label>
+          <input type="checkbox" value="34500" class="adder-checkbox" />
+          4 - Powerwall 3 - $34500
+        </label>
+        <label>
+          <input type="checkbox" value="43000" class="adder-checkbox" />
+          5 - Powerwall 3 - $43000
+        </label>
+        <label>
+          <input type="checkbox" value="800" class="adder-checkbox" />
+          Enphase IQ8 upgrade - $800
+        </label>
+        <label>
+          <input type="checkbox" value="1500" class="adder-checkbox" />
+          Tesla wall charger - $1500
+        </label>
+        <label>
+          <input type="checkbox" value="389.5" class="adder-checkbox" />
+          Critter guard - $389.5
+        </label>
+        <label>
+          <input type="checkbox" value="1000" class="adder-checkbox" />
+          Distance adder tier 2 - $1000
+        </label>
+        <label>
+          <input type="checkbox" value="3000" class="adder-checkbox" />
+          Distance adder tier 3 - $3000
+        </label>
+        <label>
+          <input type="checkbox" value="10282.8" class="adder-checkbox" />
+          Ground mount &lt; 6kw - $10282.8
+        </label>
+        <label>
+          <input type="checkbox" value="6855.2" class="adder-checkbox" />
+          Ground mount 6kw - 10kw - $6855.2
+        </label>
+        <label>
+          <input type="checkbox" value="5998.3" class="adder-checkbox" />
+          Ground mount &gt; 10kw - $5998.3
+        </label>
+        <label>
+          <input type="checkbox" value="1000" class="adder-checkbox" />
+          Small system adder &lt;= 4kw - $1000
+        </label>
+      </div>
+    </div>
+
+    <!-- 2) Battery dropdown (optional) -->
+    <div class="row">
+      <label for="batterySelect">Select Battery:</label>
+      <select id="batterySelect">
+        <option value="0">No Battery</option>
+        <option value="5000">Battery A - $5,000</option>
+        <option value="6500">Battery B - $6,500</option>
+        <option value="8000">Battery C - $8,000</option>
+      </select>
+    </div>
+
+    <!-- 3) Display auto-summed "batteries & adders" -->
+    <div class="row">
+      <label>Batteries &amp; Adders:</label>
+      <span id="addersTotal" class="result-field">$0</span>
+    </div>
+
+    <hr />
+
+    <!-- 4) Commission formula inputs: Net PPW, Redline, System Size -->
+    <div class="row">
+      <label for="netPpw">Net PPW:</label>
+      <input type="number" id="netPpw" step="0.01" value="0" />
+    </div>
+
+    <div class="row">
+      <label for="redline">Redline:</label>
+      <input type="number" id="redline" step="0.01" value="0" />
+    </div>
+
+    <div class="row">
+      <label for="systemSize">System Size (kW):</label>
+      <input type="number" id="systemSize" step="0.01" value="0" />
+    </div>
+
+    <div class="row">
+      <button id="calculateBtn">Calculate Commission</button>
+    </div>
+
+    <!-- 5) Commission Output -->
+    <div class="row">
+      <label>Commission:</label>
+      <span id="commissionResult" class="result-field">$0</span>
+    </div>
+  </div>
+
+  <script>
+    // ==========================
+    // Tabs functionality
+    // ==========================
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Hide all tab contents
+        tabContents.forEach(tc => tc.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        // Show related content
+        const target = tab.getAttribute('data-target');
+        document.getElementById(target).classList.add('active');
+
+        // Reset checkboxes whenever user switches tabs (optional)
+        // If you prefer to keep selections across tabs, remove resetAdders();
+        resetAdders();
+      });
+    });
+
+    function resetAdders() {
+      const checkboxes = document.querySelectorAll('.adder-checkbox');
+      checkboxes.forEach(cb => {
+        cb.checked = false;
+      });
+      document.getElementById('batterySelect').value = "0";
+      updateAddersTotal();
+    }
+
+    // ==========================
+    // Adders + Battery Summation
+    // ==========================
+    const checkboxes = document.querySelectorAll('.adder-checkbox');
+    const batterySelect = document.getElementById('batterySelect');
+    const addersTotalSpan = document.getElementById('addersTotal');
+
+    // Listen for changes in checkboxes or battery dropdown
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', updateAddersTotal);
+    });
+    batterySelect.addEventListener('change', updateAddersTotal);
+
+    function updateAddersTotal() {
+      let totalAdders = 0;
+      // Add up all checked boxes in the *currently visible tab*
+      const activeTabContent = document.querySelector('.tab-content.active');
+      const activeCheckboxes = activeTabContent.querySelectorAll('.adder-checkbox:checked');
+      activeCheckboxes.forEach(cb => {
+        totalAdders += parseFloat(cb.value);
+      });
+
+      // Add battery cost if selected
+      const batteryCost = parseFloat(batterySelect.value) || 0;
+      totalAdders += batteryCost;
+
+      // Update DOM
+      addersTotalSpan.textContent = `$${totalAdders.toLocaleString()}`;
+    }
+
+    // ==========================
+    // Commission Calculation
+    // ==========================
+    const calculateBtn = document.getElementById('calculateBtn');
+    const commissionResultSpan = document.getElementById('commissionResult');
+
+    calculateBtn.addEventListener('click', () => {
+      // Gather inputs
+      const netPpw = parseFloat(document.getElementById('netPpw').value) || 0;
+      const redline = parseFloat(document.getElementById('redline').value) || 0;
+      const systemSize = parseFloat(document.getElementById('systemSize').value) || 0;
+      
+      // Commission formula:
+      // (Net PPW - Redline) x 1000 x System Size
+      const commission = (netPpw - redline) * 1000 * systemSize;
+
+      commissionResultSpan.textContent = `$${commission.toLocaleString()}`;
+    });
+  </script>
+</body>
+</html>
