@@ -66,16 +66,20 @@
       font-weight: bold;
       margin-left: 1rem;
     }
+
+    hr {
+      margin: 2rem 0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Commission Calculator</h1>
 
-    <!-- Commission Inputs at the top -->
+    <!-- Updated inputs per your request -->
     <div class="row">
-      <label for="netPpw">Net PPW:</label>
-      <input type="number" id="netPpw" step="0.01" value="0" />
+      <label for="ppw">PPW:</label>
+      <input type="number" id="ppw" step="0.01" value="0" />
     </div>
 
     <div class="row">
@@ -611,8 +615,9 @@
       </div>
     </div>
 
-    <!-- 3) Display auto-summed "batteries & adders" -->
     <hr />
+
+    <!-- Display auto-summed "batteries & adders" total -->
     <div class="row">
       <label>Batteries &amp; Adders Total:</label>
       <span id="addersTotal" class="result-field">$0</span>
@@ -643,9 +648,6 @@
         resetAdders();
       });
     });
-
-    // If you DON'T want to reset selections on every tab switch,
-    // comment out the call to resetAdders() above.
 
     function resetAdders() {
       // Uncheck all checkboxes
@@ -679,10 +681,9 @@
     function updateAddersTotal() {
       // Identify the active tab content
       const activeTabContent = document.querySelector('.tab-content.active');
-
       let totalAdders = 0;
 
-      // Sum up checked boxes only in the active tab
+      // Sum up checked boxes in the active tab
       const activeCheckboxes = activeTabContent.querySelectorAll('.adder-checkbox:checked');
       activeCheckboxes.forEach(cb => {
         totalAdders += parseFloat(cb.value);
@@ -706,15 +707,48 @@
     const commissionResultSpan = document.getElementById('commissionResult');
 
     calculateBtn.addEventListener('click', () => {
-      // Get Net PPW, Redline, System Size
-      const netPpw = parseFloat(document.getElementById('netPpw').value) || 0;
+      // Gather basic inputs
+      const ppw = parseFloat(document.getElementById('ppw').value) || 0;
       const redline = parseFloat(document.getElementById('redline').value) || 0;
       const systemSize = parseFloat(document.getElementById('systemSize').value) || 0;
 
-      // Commission formula
-      const commission = (netPpw - redline) * 1000 * systemSize;
+      // Collect the total adders cost from the currently active tab
+      // We'll replicate logic from updateAddersTotal, but in code:
+      const activeTabContent = document.querySelector('.tab-content.active');
+      let totalAdders = 0;
 
-      // Show the commission
+      // Add all checked checkboxes in active tab
+      const activeCheckboxes = activeTabContent.querySelectorAll('.adder-checkbox:checked');
+      activeCheckboxes.forEach(cb => {
+        totalAdders += parseFloat(cb.value);
+      });
+
+      // Add the battery cost from active tab
+      const activeBatterySelect = activeTabContent.querySelector('select.battery-select');
+      const batteryCost = parseFloat(activeBatterySelect.value) || 0;
+      totalAdders += batteryCost;
+
+      // ============== NEW FORMULA STEPS ==============
+      // 1) netPpw = systemSize x PPW
+      const netPpw = systemSize * ppw;
+
+      // 2) systemCost = (netPpw x 1000) - (adders + battery)
+      const systemCost = (netPpw * 1000) - totalAdders;
+
+      // 3) sum = systemCost / systemSize / 1000
+      let sum = systemCost / systemSize / 1000;
+
+      // 4) sum = sum - redline
+      sum = sum - redline;
+
+      // 5) sum = sum x 1000
+      sum = sum * 1000;
+
+      // 6) commission = sum x systemSize
+      const commission = sum * systemSize;
+      // ===============================================
+
+      // Display final commission
       commissionResultSpan.textContent = `$${commission.toLocaleString()}`;
     });
   </script>
