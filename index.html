@@ -31,29 +31,30 @@
       display: block;
     }
 
-    /* Layout for the form */
+    /* Container layout */
     .container {
-      width: 800px;
+      width: 900px;
       margin: 0 auto;
     }
+
+    /* Rows for form fields */
     .row {
       margin: 0.5rem 0;
     }
     .row label {
       display: inline-block;
-      width: 150px;
+      width: 180px;
       font-weight: bold;
     }
     .row input[type="number"] {
       width: 150px;
       padding: 5px;
     }
-    .row select {
-      width: 160px;
-      padding: 5px;
-    }
 
-    /* Multiple select or checkboxes, etc. */
+    /* Checkboxes list inside each tab */
+    .adders-list {
+      margin-top: 1rem;
+    }
     .adders-list label {
       display: block;
       margin-bottom: 0.3rem;
@@ -65,18 +66,40 @@
       font-weight: bold;
       margin-left: 1rem;
     }
-
-    /* Just to make it easier to see each item */
-    .adders-list {
-      margin-top: 1rem;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Commission Calculator</h1>
 
-    <!-- 1) Tabs to select: SMP, EmPower, Trust, Freedom Forever -->
+    <!-- Commission Inputs at the top -->
+    <div class="row">
+      <label for="netPpw">Net PPW:</label>
+      <input type="number" id="netPpw" step="0.01" value="0" />
+    </div>
+
+    <div class="row">
+      <label for="redline">Redline:</label>
+      <input type="number" id="redline" step="0.01" value="0" />
+    </div>
+
+    <div class="row">
+      <label for="systemSize">System Size (kW):</label>
+      <input type="number" id="systemSize" step="0.01" value="0" />
+    </div>
+
+    <div class="row">
+      <button id="calculateBtn">Calculate Commission</button>
+    </div>
+
+    <div class="row">
+      <label>Commission:</label>
+      <span id="commissionResult" class="result-field">$0</span>
+    </div>
+
+    <hr />
+
+    <!-- Tabs: SMP, EmPower, Trust, Freedom Forever -->
     <div class="tabs">
       <div class="tab active" data-target="tab-smp">SMP</div>
       <div class="tab" data-target="tab-empower">EmPower</div>
@@ -86,8 +109,32 @@
 
     <!-- SMP TAB CONTENT -->
     <div id="tab-smp" class="tab-content active">
-      <h3>SMP Adders</h3>
+      <h2>SMP Adders</h2>
+
+      <!-- SMP Battery Dropdown -->
+      <div class="row">
+        <label>Select Battery (SMP):</label>
+        <select class="battery-select">
+          <option value="0">No Battery</option>
+          <option value="9300">10p - no back up - $9300</option>
+          <option value="12450">15p - no back up - $12450</option>
+          <option value="16600">20p - no back up - $16600</option>
+          <option value="20750">25p - no back up - $20750</option>
+          <option value="24900">30p - no back up - $24900</option>
+          <option value="12800">10p - back up - $12800</option>
+          <option value="16950">15p - back up - $16950</option>
+          <option value="21100">20p - back up - $21100</option>
+          <option value="25250">25p - back up - $25250</option>
+          <option value="29400">30p - back up - $29400</option>
+          <option value="11500">1 - Powerwall 3 - $11500</option>
+          <option value="23000">2 - Powerwall 3 - $23000</option>
+          <option value="34500">3 - Powerwall 3 - $34500</option>
+          <option value="46000">4 - Powerwall 3 - $46000</option>
+        </select>
+      </div>
+
       <div class="adders-list">
+        <!-- SMP Adder Checkboxes -->
         <label>
           <input type="checkbox" value="2500" class="adder-checkbox" />
           MPU - $2500
@@ -119,66 +166,6 @@
         <label>
           <input type="checkbox" value="1082.4" class="adder-checkbox" />
           IQ 8 upgrade - $1082.4
-        </label>
-        <label>
-          <input type="checkbox" value="9300" class="adder-checkbox" />
-          10p - no back up - $9300
-        </label>
-        <label>
-          <input type="checkbox" value="12450" class="adder-checkbox" />
-          15p - no back up - $12450
-        </label>
-        <label>
-          <input type="checkbox" value="16600" class="adder-checkbox" />
-          20p - no back up - $16600
-        </label>
-        <label>
-          <input type="checkbox" value="20750" class="adder-checkbox" />
-          25p - no back up - $20750
-        </label>
-        <label>
-          <input type="checkbox" value="24900" class="adder-checkbox" />
-          30p - no back up - $24900
-        </label>
-        <label>
-          <input type="checkbox" value="12800" class="adder-checkbox" />
-          10p - back up - $12800
-        </label>
-        <label>
-          <input type="checkbox" value="16950" class="adder-checkbox" />
-          15p - back up - $16950
-        </label>
-        <label>
-          <input type="checkbox" value="21100" class="adder-checkbox" />
-          20p - back up - $21100
-        </label>
-        <label>
-          <input type="checkbox" value="25250" class="adder-checkbox" />
-          25p - back up - $25250
-        </label>
-        <label>
-          <input type="checkbox" value="29400" class="adder-checkbox" />
-          30p - back up - $29400
-        </label>
-        <label>
-          <input type="checkbox" value="11500" class="adder-checkbox" />
-          1 - Powerwall 3 - $11500
-        </label>
-        <label>
-          <input type="checkbox" value="23000" class="adder-checkbox" />
-          2 - Powerwall 3 - $23000
-        </label>
-        <label>
-          <input type="checkbox" value="34500" class="adder-checkbox" />
-          3 - Powerwall 3 - $34500
-        </label>
-        <label>
-          <input type="checkbox" value="46000" class="adder-checkbox" />
-          4 - Powerwall 3 - $46000
-        </label>
-        <label>
-          <input type="checkbox" value="500" class="adder-checkbox" />
-          5-year panel cleaning (PPA) - $500
         </label>
         <label>
           <input type="checkbox" value="4500" class="adder-checkbox" />
@@ -258,7 +245,7 @@
         </label>
         <label>
           <input type="checkbox" value="750" class="adder-checkbox" />
-          Travel adder over 75-125 mi. from base - $750
+          Travel adder over 75-125 mi. - $750
         </label>
         <label>
           <input type="checkbox" value="1200" class="adder-checkbox" />
@@ -289,8 +276,25 @@
 
     <!-- EmPower TAB CONTENT -->
     <div id="tab-empower" class="tab-content">
-      <h3>EmPower Adders</h3>
+      <h2>EmPower Adders</h2>
+
+      <!-- EmPower Battery Dropdown -->
+      <div class="row">
+        <label>Select Battery (EmPower):</label>
+        <select class="battery-select">
+          <option value="0">No Battery</option>
+          <option value="5000">5p - $5000</option>
+          <option value="9000">10p - $9000</option>
+          <option value="13000">15p - $13000</option>
+          <option value="17000">20p - $17000</option>
+          <option value="21000">25p - $21000</option>
+          <option value="25000">30p - $25000</option>
+          <option value="29000">35p - $29000</option>
+        </select>
+      </div>
+
       <div class="adders-list">
+        <!-- EmPower Adder Checkboxes -->
         <label>
           <input type="checkbox" value="5000" class="adder-checkbox" />
           5p - $5000
@@ -356,8 +360,35 @@
 
     <!-- Trust TAB CONTENT -->
     <div id="tab-trust" class="tab-content">
-      <h3>Trust Adders</h3>
+      <h2>Trust Adders</h2>
+
+      <!-- Trust Battery Dropdown -->
+      <div class="row">
+        <label>Select Battery (Trust):</label>
+        <select class="battery-select">
+          <option value="0">No Battery</option>
+          <option value="9000">Tesla Power Wall 3 - $9000</option>
+          <option value="8500">Additional Power Wall 3 - $8500</option>
+          <option value="8500">Additional Power Wall 3 - $8500</option>
+          <option value="8500">Additional Power Wall 3 - $8500</option>
+          <option value="8500">Additional Power Wall 3 - $8500</option>
+          <option value="8500">Additional Power Wall 3 - $8500</option>
+          <option value="4500">Enphase 5P - $4500</option>
+          <option value="4500">Enphase 5P - $4500</option>
+          <option value="4500">Enphase 5P - $4500</option>
+          <option value="4500">Enphase 5P - $4500</option>
+          <option value="4500">Enphase 5P - $4500</option>
+          <option value="9000">EG4 - $9000</option>
+          <option value="4500">Additional EG4 - $4500</option>
+          <option value="4500">Additional EG4 - $4500</option>
+          <option value="4500">Additional EG4 - $4500</option>
+          <option value="4500">Additional EG4 - $4500</option>
+          <option value="4500">Additional EG4 - $4500</option>
+        </select>
+      </div>
+
       <div class="adders-list">
+        <!-- Trust Adder Checkboxes -->
         <label>
           <input type="checkbox" value="9000" class="adder-checkbox" />
           Tesla Power Wall 3 - $9000
@@ -407,22 +438,6 @@
           EG4 - $9000
         </label>
         <label>
-          <input type="checkbox" value="9000" class="adder-checkbox" />
-          EG4 - $9000
-        </label>
-        <label>
-          <input type="checkbox" value="9000" class="adder-checkbox" />
-          EG4 - $9000
-        </label>
-        <label>
-          <input type="checkbox" value="9000" class="adder-checkbox" />
-          EG4 - $9000
-        </label>
-        <label>
-          <input type="checkbox" value="9000" class="adder-checkbox" />
-          EG4 - $9000
-        </label>
-        <label>
           <input type="checkbox" value="2800" class="adder-checkbox" />
           MPU - $2800
         </label>
@@ -435,8 +450,40 @@
 
     <!-- Freedom Forever TAB CONTENT -->
     <div id="tab-freedom" class="tab-content">
-      <h3>Freedom Forever Adders</h3>
+      <h2>Freedom Forever Adders</h2>
+
+      <!-- Freedom Forever Battery Dropdown -->
+      <div class="row">
+        <label>Select Battery (Freedom):</label>
+        <select class="battery-select">
+          <option value="0">No Battery</option>
+          <option value="5000">5P &lt;= 4kw no backup - $5000</option>
+          <option value="9750">10P &lt;= 4kw no backup - $9750</option>
+          <option value="9000">5P &gt; 4kw no backup - $9000</option>
+          <option value="13750">10P &gt; 4kw no backup - $13750</option>
+          <option value="18500">15P &gt; 4kw no backup - $18500</option>
+          <option value="23250">20P &gt; 4kw no backup - $23250</option>
+          <option value="28000">25P &gt; 4kw no backup - $28000</option>
+          <option value="32750">30P &gt; 4kw no backup - $32750</option>
+          <option value="37500">35P &gt; 4kw no backup - $37500</option>
+          <option value="42250">40P &gt; 4kw no backup - $42250</option>
+          <option value="10500">5p - back up - $10500</option>
+          <option value="16250">10p - back up - $16250</option>
+          <option value="22000">15p - back up - $22000</option>
+          <option value="27750">20p - back up - $27750</option>
+          <option value="33500">25p - back up - $33500</option>
+          <option value="39250">30p - back up - $39250</option>
+          <option value="45000">35p - back up - $45000</option>
+          <option value="9000">1 - Powerwall 3 - $9000</option>
+          <option value="17500">2 - Powerwall 3 - $17500</option>
+          <option value="26000">3 - Powerwall 3 - $26000</option>
+          <option value="34500">4 - Powerwall 3 - $34500</option>
+          <option value="43000">5 - Powerwall 3 - $43000</option>
+        </select>
+      </div>
+
       <div class="adders-list">
+        <!-- Freedom Forever Adder Checkboxes -->
         <label>
           <input type="checkbox" value="5000" class="adder-checkbox" />
           5P &lt;= 4kw no backup - $5000
@@ -564,59 +611,21 @@
       </div>
     </div>
 
-    <!-- 2) Battery dropdown (optional) -->
-    <div class="row">
-      <label for="batterySelect">Select Battery:</label>
-      <select id="batterySelect">
-        <option value="0">No Battery</option>
-        <option value="5000">Battery A - $5,000</option>
-        <option value="6500">Battery B - $6,500</option>
-        <option value="8000">Battery C - $8,000</option>
-      </select>
-    </div>
-
     <!-- 3) Display auto-summed "batteries & adders" -->
-    <div class="row">
-      <label>Batteries &amp; Adders:</label>
-      <span id="addersTotal" class="result-field">$0</span>
-    </div>
-
     <hr />
-
-    <!-- 4) Commission formula inputs: Net PPW, Redline, System Size -->
     <div class="row">
-      <label for="netPpw">Net PPW:</label>
-      <input type="number" id="netPpw" step="0.01" value="0" />
-    </div>
-
-    <div class="row">
-      <label for="redline">Redline:</label>
-      <input type="number" id="redline" step="0.01" value="0" />
-    </div>
-
-    <div class="row">
-      <label for="systemSize">System Size (kW):</label>
-      <input type="number" id="systemSize" step="0.01" value="0" />
-    </div>
-
-    <div class="row">
-      <button id="calculateBtn">Calculate Commission</button>
-    </div>
-
-    <!-- 5) Commission Output -->
-    <div class="row">
-      <label>Commission:</label>
-      <span id="commissionResult" class="result-field">$0</span>
+      <label>Batteries &amp; Adders Total:</label>
+      <span id="addersTotal" class="result-field">$0</span>
     </div>
   </div>
 
   <script>
-    // ==========================
+    // -------------------------
     // Tabs functionality
-    // ==========================
+    // -------------------------
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         // Remove active class from all tabs
@@ -630,67 +639,82 @@
         const target = tab.getAttribute('data-target');
         document.getElementById(target).classList.add('active');
 
-        // Reset checkboxes whenever user switches tabs (optional)
-        // If you prefer to keep selections across tabs, remove resetAdders();
+        // Reset the adders & battery selection upon switching (optional)
         resetAdders();
       });
     });
 
+    // If you DON'T want to reset selections on every tab switch,
+    // comment out the call to resetAdders() above.
+
     function resetAdders() {
-      const checkboxes = document.querySelectorAll('.adder-checkbox');
-      checkboxes.forEach(cb => {
+      // Uncheck all checkboxes
+      const allCheckboxes = document.querySelectorAll('.adder-checkbox');
+      allCheckboxes.forEach(cb => {
         cb.checked = false;
       });
-      document.getElementById('batterySelect').value = "0";
+      // Reset all battery selects to "No Battery"
+      const allBatterySelects = document.querySelectorAll('.battery-select');
+      allBatterySelects.forEach(sel => {
+        sel.value = "0";
+      });
       updateAddersTotal();
     }
 
-    // ==========================
+    // -------------------------
     // Adders + Battery Summation
-    // ==========================
-    const checkboxes = document.querySelectorAll('.adder-checkbox');
-    const batterySelect = document.getElementById('batterySelect');
+    // -------------------------
+    const allCheckboxes = document.querySelectorAll('.adder-checkbox');
+    const allBatterySelects = document.querySelectorAll('.battery-select');
     const addersTotalSpan = document.getElementById('addersTotal');
 
-    // Listen for changes in checkboxes or battery dropdown
-    checkboxes.forEach(cb => {
+    // Listen for changes in any checkbox or battery dropdown
+    allCheckboxes.forEach(cb => {
       cb.addEventListener('change', updateAddersTotal);
     });
-    batterySelect.addEventListener('change', updateAddersTotal);
+    allBatterySelects.forEach(sel => {
+      sel.addEventListener('change', updateAddersTotal);
+    });
 
     function updateAddersTotal() {
-      let totalAdders = 0;
-      // Add up all checked boxes in the *currently visible tab*
+      // Identify the active tab content
       const activeTabContent = document.querySelector('.tab-content.active');
+
+      let totalAdders = 0;
+
+      // Sum up checked boxes only in the active tab
       const activeCheckboxes = activeTabContent.querySelectorAll('.adder-checkbox:checked');
       activeCheckboxes.forEach(cb => {
         totalAdders += parseFloat(cb.value);
       });
 
-      // Add battery cost if selected
-      const batteryCost = parseFloat(batterySelect.value) || 0;
-      totalAdders += batteryCost;
+      // Also add the battery cost from the active tab's battery dropdown
+      const activeBatterySelect = activeTabContent.querySelector('select.battery-select');
+      if (activeBatterySelect) {
+        const batteryCost = parseFloat(activeBatterySelect.value) || 0;
+        totalAdders += batteryCost;
+      }
 
-      // Update DOM
+      // Update the total on screen
       addersTotalSpan.textContent = `$${totalAdders.toLocaleString()}`;
     }
 
-    // ==========================
+    // -------------------------
     // Commission Calculation
-    // ==========================
+    // -------------------------
     const calculateBtn = document.getElementById('calculateBtn');
     const commissionResultSpan = document.getElementById('commissionResult');
 
     calculateBtn.addEventListener('click', () => {
-      // Gather inputs
+      // Get Net PPW, Redline, System Size
       const netPpw = parseFloat(document.getElementById('netPpw').value) || 0;
       const redline = parseFloat(document.getElementById('redline').value) || 0;
       const systemSize = parseFloat(document.getElementById('systemSize').value) || 0;
-      
-      // Commission formula:
-      // (Net PPW - Redline) x 1000 x System Size
+
+      // Commission formula
       const commission = (netPpw - redline) * 1000 * systemSize;
 
+      // Show the commission
       commissionResultSpan.textContent = `$${commission.toLocaleString()}`;
     });
   </script>
